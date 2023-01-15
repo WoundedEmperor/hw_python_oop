@@ -63,12 +63,6 @@ class Running(Training):
     CALORIES_MEAN_SPEED_SHIFT = 1.79
     # получает информаацию:
 
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float) -> None:
-        super().__init__(action, duration, weight)
-
     def get_spent_calories(self):
         return (((self.CALORIES_MEAN_SPEED_MULTIPLIER) * self.get_mean_speed()
                 + (self.CALORIES_MEAN_SPEED_SHIFT)) * self.weight
@@ -84,15 +78,7 @@ class SportsWalking(Training):
     KMH_IN_MSEC = 0.278
     CM_IN_M = 100
 
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float,
-                 height: float) -> None:
-        super().__init__(action,
-                         duration,
-                         weight)
-        self.height = height
+    height: float
 
     def get_spent_calories(self):
         return ((self.CALORIES_WEIGHT_MULTIPLIER * self.weight
@@ -105,22 +91,16 @@ class SportsWalking(Training):
 @dataclass
 class Swimming(Training):
     """Тренировка: плавание."""
+
+    lenght_pool: int  # длина бассейна в метрах
+    count_pool: int  # сколько раз переплыл бассейн
+
     LEN_STEP: float = 1.38  # переопределить LEN_STEP для этого класса
     CALORIES_MEAN_DURATION_MOD = 1.1
     CALORIES_MEAN_WEIGHT_MOD = 2
     # принимает lenght_pool - длина бассейна
     # принимает count_pool - сколько раз пользователь переплыл бассейн
     # переопределить метод get_spent_calories() и метод get_mean_speed()
-
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float,
-                 length_pool: int,
-                 count_pool: int) -> None:
-        super().__init__(action, duration, weight)
-        self.lenght_pool = length_pool  # длина бассейна в метрах
-        self.count_pool = count_pool  # сколько раз переплыл бассейн
 
     def get_distance(self) -> float:
         swmn_dist = self.LEN_STEP * self.action / self.M_IN_KM
