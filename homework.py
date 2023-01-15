@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -125,7 +126,7 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
 
-    package: None = {'SWM': Swimming,
+    package: List = {'SWM': Swimming,
                      'RUN': Running,
                      'WLK': SportsWalking}
 
@@ -147,7 +148,7 @@ def main(training: Training) -> None:
 
 
 if __name__ == '__main__':
-    packages: None = [
+    packages: List = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
