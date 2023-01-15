@@ -44,7 +44,8 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        raise NotImplementedError(self.__class__.__name__)
+        raise NotImplementedError(
+            f'Определите get_spent_calories в {self.__class__.__name__}')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -144,9 +145,9 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
 
-    package = {'SWM': Swimming,
-               'RUN': Running,
-               'WLK': SportsWalking}
+    package: None = {'SWM': Swimming,
+                     'RUN': Running,
+                     'WLK': SportsWalking}
 
     package_type = package[workout_type]
     return package_type(*data)
@@ -166,7 +167,7 @@ def main(training: Training) -> None:
 
 
 if __name__ == '__main__':
-    packages = [
+    packages: None = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
