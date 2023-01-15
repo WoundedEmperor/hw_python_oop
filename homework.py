@@ -4,6 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
+
     training_type: str  # имя класса тренировки
     duration: float  # длительность тренировки
     distance: float  # дистанция тренировки
@@ -15,25 +16,21 @@ class InfoMessage:
                 f'Длительность: {self.duration:.3f} ч.; '
                 f'Дистанция: {self.distance:.3f} км; '
                 f'Ср. скорость: {self.speed:.3f} км/ч; '
-                f'Потрачено ккал: {self.calories:.3f}.')  # значения до тысячн.
+                f'Потрачено ккал: {self.calories:.3f}.')
 
 
 @dataclass
 class Training:
     """Базовый класс тренировки."""
+
+    action: int
+    duration: float
+    weight: float
+
     LEN_STEP = 0.65  # длина шага (0,65) или гребка (1,38)
     M_IN_KM = 1000  # константа для перевода значений в километры (1000)
     MIN_IN_H = 60
     CALORIES_MEAN_SPEED_MULTIPLIER = 18
-
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float,
-                 ) -> None:
-        self.action = action
-        self.duration = duration
-        self.weight = weight
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
@@ -47,7 +44,7 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        pass
+        raise NotImplementedError(self.__class__.__name__)
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -66,9 +63,9 @@ class Running(Training):
     # получает информаацию:
 
     def __init__(self,
-                 action: int,  # кол-во действий перевести в км
-                 duration: float,  # длительность тренировки
-                 weight: float) -> None:  # вес спортсмена
+                 action: int,
+                 duration: float,
+                 weight: float) -> None:
         super().__init__(action, duration, weight)
 
     def get_spent_calories(self):
@@ -144,18 +141,15 @@ class Swimming(Training):
         return swmn
 
 
-def read_package(workout_type: str, data: list) -> Training:
+def read_package(workout_type: str, data: list[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
-    # функция должна перебрать в цикле список packages
-    # и создать объекты классов тренировок во втором аргументе
-    package = {'SWM': Swimming,
-               'RUN': Running,
-               'WLK': SportsWalking}
+
+    package: None = {'SWM': Swimming,
+                     'RUN': Running,
+                     'WLK': SportsWalking}
 
     package_type = package[workout_type]
-    return package_type(*data)  # перепроверить (скорее всего неправильно)
-    # должен быть словарь, в котором сопоставляются
-    # коды тренировок и классы, вызываемые для каждого типа тренировок
+    return package_type(*data)
 
 
 def main(training: Training) -> None:
@@ -172,7 +166,7 @@ def main(training: Training) -> None:
 
 
 if __name__ == '__main__':
-    packages = [
+    packages: None = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
