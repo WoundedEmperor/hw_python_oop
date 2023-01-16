@@ -100,7 +100,7 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
 
-    lenght_pool: int  # длина бассейна в метрах
+    length_pool: int  # длина бассейна в метрах
     count_pool: int  # сколько раз переплыл бассейн
 
     LEN_STEP: float = 1.38  # переопределить LEN_STEP для этого класса
@@ -116,7 +116,7 @@ class Swimming(Training):
 
     def get_spent_calories(self) -> float:
         # (средняя_скорость + 1.1) * 2 * вес * время_тренировки
-        swmn_cal = ((((self.lenght_pool * self.count_pool)
+        swmn_cal = ((((self.length_pool * self.count_pool)
                     / self.M_IN_KM / self.duration)
                     + self.CALORIES_MEAN_DURATION_MOD)
                     * self.CALORIES_MEAN_WEIGHT_MOD * self.weight
@@ -124,7 +124,7 @@ class Swimming(Training):
         return swmn_cal
 
     def get_mean_speed(self):
-        swmn = (self.lenght_pool * self.count_pool
+        swmn = (self.length_pool * self.count_pool
                 / self.M_IN_KM / self.duration)
         # длина_бассейна * count_pool / M_IN_KM / время_тренировки
         return swmn
