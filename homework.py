@@ -130,7 +130,7 @@ class Swimming(Training):
         return swmn
 
 
-def read_package(workout_type: str, data: list[int]) -> Training:
+def read_package(workout_type: str, data: List[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
 
     package: Dict = {'SWM': Swimming,
