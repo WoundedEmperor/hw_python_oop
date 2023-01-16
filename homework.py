@@ -35,21 +35,25 @@ class Training:
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
+        
         self.dist = self.action * (self.LEN_STEP) / (self.M_IN_KM)
         return self.dist
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
+
         self.speed = (self.get_distance() / self.duration)
         return self.speed
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
+
         raise NotImplementedError(
             f'Определите get_spent_calories в {self.__class__.__name__}')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
+
         return InfoMessage(self.__class__.__name__,
                            self.duration,
                            self.get_distance(),
@@ -60,6 +64,7 @@ class Training:
 @dataclass
 class Running(Training):
     """Тренировка: бег."""
+
     CALORIES_MEAN_SPEED_MULTIPLIER = 18
     CALORIES_MEAN_SPEED_SHIFT = 1.79
     # получает информаацию:
@@ -73,6 +78,7 @@ class Running(Training):
 @dataclass
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
+
     # принимает параметр height — рост спортсмена
     CALORIES_WEIGHT_MULTIPLIER = 0.035
     CALORIES_SPEED_HEIGHT_MULTIPLIER = 0.029
@@ -136,6 +142,7 @@ def read_package(workout_type: str, data: list[int]) -> Training:
 
 def main(training: Training) -> None:
     """Главная функция."""
+
     # принимает на вход экземпляр класса Training,
     # при выполнении функции должен быть вызван метод show_training_info().
     # Результатом должен быть объект IndoMessage,
